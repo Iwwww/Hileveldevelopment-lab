@@ -1,1 +1,4 @@
-add_library(CMenu CMenu.cpp CMenuItem.cpp) 
+add_library(CMenu 
+            CMenu.cpp
+            CMenuItem.cpp
+            )
