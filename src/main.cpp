@@ -66,7 +66,6 @@ int product() {
     return 8;
 }
 
-
 #pragma endregion функции-заглушки
 
 const int items_number = 8;
