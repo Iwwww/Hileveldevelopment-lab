@@ -32,8 +32,11 @@ namespace YMM {
 
     int CMenu::runCommand() {
         print();
-        std::cout << "\n Select >> ";
-        std::cin >> m_select;
+        do {
+            std::cout << "\n Select >> ";
+            std::cin >> m_select;
+        } while (m_select == -1 || m_select > m_count);
+        
         return m_items[m_select - 1].run();
     }
 }
