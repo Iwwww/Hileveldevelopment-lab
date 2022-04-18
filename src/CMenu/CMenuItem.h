@@ -4,7 +4,7 @@
 namespace YMM {
 class CMenuItem {
     public:
-        typedef int(*Func)();
+        using Func = int(*)();
         CMenuItem(char *, Func);
         Func m_func{};
         char *m_item_name{};
