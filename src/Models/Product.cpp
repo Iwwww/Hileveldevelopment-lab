@@ -8,19 +8,19 @@ namespace YMM {
        fruit
     };
 
-    std::string Product::getTitle() {
+    std::string Product::getTitle() const {
         return m_title;
     }
 
-    Product::ProductType Product::getProductType() {
+    Product::ProductType Product::getProductType() const {
         return m_productType;
     }
 
-    float Product::getPrice() {
+    float Product::getPrice() const {
         return m_price;
     }
 
-    int Product::getAmount() {
+    int Product::getAmount() const {
         return m_amount;
     }
 
@@ -36,7 +36,7 @@ namespace YMM {
         m_amount = _amount;
     }
 
-    void Product::printData() {
+    void Product::printData() const {
         std::cout << "Title " << Product::getTitle() << std::endl;
         std::cout << "Price " << Product::getPrice() << std::endl;
         std::cout << "Amout " << Product::getAmount() << std::endl;

@@ -18,23 +18,23 @@ namespace YMM {
         m_password = _password;
     }
 
-    std::string User::getName() {
+    std::string User::getName() const {
         return m_name;
     }
 
-    std::string User::getSurname() {
+    std::string User::getSurname() const {
         return m_surname;
     }
 
-    std::string User::getLogin() {
+    std::string User::getLogin() const {
         return m_login;
     }
 
-    std::string User::getPassword() {
+    std::string User::getPassword() const {
         return m_password;
     }
 
-    void User::printData() {
+    void User::printData() const {
         std::cout << "Name " << User::getName() << std::endl;
         std::cout << "Surname " << User::getSurname() << std::endl;
         std::cout << "Login " << User::getLogin() << std::endl;

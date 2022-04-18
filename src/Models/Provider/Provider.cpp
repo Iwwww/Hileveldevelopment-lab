@@ -3,7 +3,7 @@
 #include "Provider.h"
 
 namespace YMM {
-    void Provider::printData() {
+    void Provider::printData() const {
         std::cout << "Name " << Provider::getName() << std::endl;
         std::cout << "Surname " << Provider::getSurname() << std::endl;
         std::cout << "Login " << Provider::getLogin() << std::endl;

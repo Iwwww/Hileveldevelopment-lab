@@ -9,12 +9,12 @@ namespace YMM {
             void setLogin(std::string _login);
             void setPassword(std::string _password);
 
-            std::string getName();
-            std::string getSurname();
-            std::string getLogin();
-            std::string getPassword();
+            std::string getName() const;
+            std::string getSurname() const;
+            std::string getLogin() const;
+            std::string getPassword() const;
 
-            virtual void printData() = 0;
+            virtual void printData() const = 0;
 
             // User(std::string _name, std::string _surname, std::string _login, std::string _password);
 

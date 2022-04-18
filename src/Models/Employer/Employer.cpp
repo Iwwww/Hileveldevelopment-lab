@@ -3,7 +3,7 @@
 #include "Employer.h"
 
 namespace YMM {
-    std::string Employer::getPosition() {
+    std::string Employer::getPosition() const {
         return m_position;
     }
 
@@ -11,7 +11,7 @@ namespace YMM {
         m_position = _position;
     }
 
-    void Employer::printData() {
+    void Employer::printData() const {
         std::cout << "Name " << Employer::getName() << std::endl;
         std::cout << "Surname " << Employer::getSurname() << std::endl;
         std::cout << "Login " << Employer::getLogin() << std::endl;
