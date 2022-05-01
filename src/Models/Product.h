@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 namespace YMM {
     class Product {
@@ -11,15 +12,23 @@ namespace YMM {
             float getPrice() const;
             int getAmount() const;
 
-            void setTitle(std::string _title);
-            void setProductType(ProductType _productType);
-            void setPrice(float _price);
-            void setAmount(int _amount);
+            void setTitle(std::string);
+            void setProductType(ProductType);
+            void setPrice(float);
+            void setAmount(int);
 
             void printData() const;
 
             Product();
-            Product(std::string _title, ProductType _productType, float _price, int _amount);
+            Product(std::string, ProductType, float, int);
+
+            friend std::ostream& operator<<(std::ostream&, Product&);
+            friend std::istream& operator>>(std::istream&, Product&);
+
+            friend bool operator>(const Product&, const Product&);
+            friend bool operator<(const Product&, const Product&);
+
+            bool operator<(Product &object) const;
 
         protected:
             std::string m_title;

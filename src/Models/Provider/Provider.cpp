@@ -17,4 +17,26 @@ namespace YMM {
         m_password = _password;
         m_productType = _productType;
     }
+
+    std::ostream& operator<<(std::ostream& out, Provider& object) {
+        object.printData();
+
+        return out;
+    }
+
+    std::istream& operator>>(std::istream& in, Provider& object) {
+        std::cout << "Name ";
+        std::cin >> object.m_name;
+
+        std::cout << "Surname ";
+        std::cin >> object.m_surname;
+
+        std::cout << "Login ";
+        std::cin >> object.m_login;
+
+        std::cout << "Password ";
+        std::cin >> object.m_password;
+
+        return in;
+    }
 }

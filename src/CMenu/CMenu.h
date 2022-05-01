@@ -15,6 +15,7 @@ class CMenu {
         CMenuItem *getItems();
         void print();
         int runCommand();
+        int runCommand(CMenu*);
 
     private:
         int m_select{-1};
@@ -22,6 +23,7 @@ class CMenu {
         bool m_running{};
         char *m_title{};
         CMenuItem *m_items{};
+        bool m_submenu{};
     };
 }
 

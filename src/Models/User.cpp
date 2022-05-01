@@ -41,8 +41,20 @@ namespace YMM {
         std::cout << "Password " << User::getPassword() << std::endl;
     }
 
-    // User::User(std::string _name, std::string _surname, std::string _login, std::string _password) {
-    //     m_name = _name;
+    std::ostream& operator<<(std::ostream& out, User& object) {
+        object.printData();
+
+        return out;
+    }
+
+    std::ostream& operator>>(std::ostream& in, User& object) {
+        object.printData();
+
+        return in;
+    }
+
+// User::User(std::string _name, std::string _surname, std::string _login, std::string _password) {
+//     m_name = _name;
     //     m_surname = _surname;
     //     m_login = _login;
     //     m_password = _password;

@@ -1,5 +1,3 @@
-#include <string>
-#include <iostream>
 #include "Employer.h"
 
 namespace YMM {
@@ -26,5 +24,27 @@ namespace YMM {
         m_login = _login;
         m_password = _password;
         m_position = _position;
+    }
+
+    std::ostream& operator<<(std::ostream& out, Employer& object) {
+        object.printData();
+
+        return out;
+    }
+
+    std::istream& operator>>(std::istream& in, Employer& object) {
+        std::cout << "Name ";
+        std::cin >> object.m_name;
+
+        std::cout << "Surname ";
+        std::cin >> object.m_surname;
+
+        std::cout << "Login ";
+        std::cin >> object.m_login;
+
+        std::cout << "Password ";
+        std::cin >> object.m_password;
+
+        return in;
     }
 }

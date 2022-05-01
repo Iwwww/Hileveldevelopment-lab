@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include "../User.h"
 
 namespace YMM {
@@ -14,6 +15,9 @@ namespace YMM {
 
             Employer();
             Employer(std::string _name, std::string _surname, std::string _login, std::string _password, std::string _position);
+
+            friend std::ostream& operator<<(std::ostream& out, Employer& object);
+            friend std::istream& operator>>(std::istream& in, Employer& object);
 
         private:
             std::string m_position;

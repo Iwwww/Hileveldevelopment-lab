@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 namespace YMM {
     class User {
@@ -16,6 +17,9 @@ namespace YMM {
 
             virtual void printData() const = 0;
 
+            friend std::ostream& operator<<(std::ostream& out, User& object);
+            friend std::ostream& operator>>(std::ostream& in, User& object);
+
             // User(std::string _name, std::string _surname, std::string _login, std::string _password);
 
         protected:
@@ -25,3 +29,4 @@ namespace YMM {
             std::string m_password;
     };
 }
+

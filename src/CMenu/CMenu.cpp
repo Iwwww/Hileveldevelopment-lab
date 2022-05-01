@@ -33,10 +33,34 @@ namespace YMM {
     int CMenu::runCommand() {
         print();
         do {
+            std::cout << "\n Select l->> ";
+            std::cin >> m_select;
+        } while (m_select == -1 || m_select > m_count);
+
+        // Exit from menu
+        if (m_select == 0) {
+            if (m_submenu) {
+                m_running = false;
+            } else {
+                return 1;
+            }
+        }
+
+        return m_items[m_select - 1].run();
+    }
+
+    int CMenu::runCommand(CMenu *subMenu) {
+        m_submenu = true;
+        print();
+        do {
             std::cout << "\n Select >> ";
             std::cin >> m_select;
         } while (m_select == -1 || m_select > m_count);
         
-        return m_items[m_select - 1].run();
-    }
+        // Exit from menu
+        if (m_select == 0) return 0;
+
+        return subMenu[m_select - 1].runCommand();
+    } 
 }
+

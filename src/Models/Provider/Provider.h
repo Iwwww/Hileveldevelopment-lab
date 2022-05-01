@@ -1,5 +1,6 @@
 #pragma once
 #include <string.h>
+#include <iostream>
 #include "../User.h"
 #include "../Product.h"
 
@@ -9,5 +10,8 @@ namespace YMM {
             void printData() const;
             Provider();
             Provider(std::string _name, std::string _surname, std::string _login, std::string _password, ProductType _productType);
+
+            friend std::ostream& operator<<(std::ostream&, Provider&);
+            friend std::istream& operator>>(std::istream&, Provider&);
     };
 }
