@@ -7,8 +7,6 @@ namespace YMM {
         public:
             enum class ProductType;
 
-            std::string getTitle() const;
-            ProductType getProductType() const;
             float getPrice() const;
             int getAmount() const;
 
