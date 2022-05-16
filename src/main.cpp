@@ -161,20 +161,21 @@ int main() {
     };
     
     CMenu menu("My console menu", items, items_number);
-    while (menu.runCommand(subMenuArr));
-    //while (menu.runCommand());
-    switch(1) {
+    while (menu.runCommand(subMenuArr)) {
+        switch (1) {
         case 1:
-            break;
+          break;
         case 2:
-            break;
+          break;
         case 3:
-            break;
+          break;
         case 4:
-            break;
+          break;
         default:
-            break;
-    }
+          break;
+        }
+
+    };
 
     return 0;
 }
