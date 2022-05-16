@@ -2,23 +2,27 @@
 #include "Provider.h"
 
 namespace YMM {
-    void Provider::printData() const {
+    Provider::Provider() {}
+    Provider::Provider(std::string _name, std::string _surname, std::string _login, std::string _password, Product *_product) {
+        m_name = _name;
+        m_surname = _surname;
+        m_login = _login;
+        m_password = _password;
+        m_product = _product;
+    }
+
+     void Provider::printData() const {
         std::cout << "Name " << Provider::getName() << std::endl;
         std::cout << "Surname " << Provider::getSurname() << std::endl;
         std::cout << "Login " << Provider::getLogin() << std::endl;
         std::cout << "Password " << Provider::getPassword() << std::endl;
     }
 
-    Provider::Provider() {}
-    Provider::Provider(std::string _name, std::string _surname, std::string _login, std::string _password, Provider::ProductType _productType) {
-        m_name = _name;
-        m_surname = _surname;
-        m_login = _login;
-        m_password = _password;
-        m_productType = _productType;
-    }
+     // Product *getProduct() {
+         // return m_product ;
+     // }
 
-    std::ostream& operator<<(std::ostream& out, Provider& object) {
+   std::ostream& operator<<(std::ostream& out, Provider& object) {
         object.printData();
 
         return out;
@@ -36,6 +40,9 @@ namespace YMM {
 
         std::cout << "Password ";
         std::cin >> object.m_password;
+
+        std::cout << "Product Type ";
+        std::cin >> object.m_productType;
 
         return in;
     }

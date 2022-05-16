@@ -7,11 +7,17 @@
 namespace YMM {
     class Provider : public User, public Product {
         public:
-            void printData() const;
             Provider();
-            Provider(std::string _name, std::string _surname, std::string _login, std::string _password, ProductType _productType);
+            Provider(std::string _name, std::string _surname, std::string _login, std::string _password, Product *);
+
+            void printData() const;
+
+            Product *getProduct();
 
             friend std::ostream& operator<<(std::ostream&, Provider&);
             friend std::istream& operator>>(std::istream&, Provider&);
+
+        private:
+            Product *m_product = nullptr;
     };
 }

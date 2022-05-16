@@ -2,18 +2,8 @@
 #include "Product.h"
 
 namespace YMM {
-    enum class Product::ProductType {
-       fish,
-       vegetable,
-       fruit
-    };
-
     std::string Product::getTitle() const {
         return m_title;
-    }
-
-    Product::ProductType Product::getProductType() const {
-        return m_productType;
     }
 
     float Product::getPrice() const {
@@ -24,11 +14,14 @@ namespace YMM {
         return m_amount;
     }
 
+    // std::string getProductType() {
+        // return m_productType;
+    // }
     void Product::setTitle(std::string _title) {
         m_title = _title;
     }
 
-    void Product::setProductType(Product::ProductType _productType) {
+    void Product::setProductType(std::string _productType) {
         m_productType = _productType;
     }
 
@@ -41,26 +34,14 @@ namespace YMM {
         std::cout << "Price " << Product::getPrice() << std::endl;
         std::cout << "Amout " << Product::getAmount() << std::endl;
         std::string productTypeStr = "";
-        switch((int)m_productType) {
-            case 0:
-                productTypeStr = "fish";
-                break;
-            case 1:
-                productTypeStr = "vegetable";
-                break;
-            case 2:
-                productTypeStr = "fruit";
-                break;
-            default:
-                productTypeStr = "";
-        }
         std::cout << "Product Type " << productTypeStr << std::endl;
     }
 
     Product::Product() {}
 
-    Product::Product(std::string _title, ProductType _productType, float _price, int _amount) {
+    Product::Product(std::string _title, std::string _productType, float _price, int _amount) {
         m_title = _title;
+        m_productType = _productType;
         m_price = _price;
         m_amount = _amount;
     }

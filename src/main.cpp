@@ -10,9 +10,9 @@
 int f1() {
     using namespace YMM;
     Product* productList[4]{
-        new Product(std::string("Treska"), Product::ProductType{}, 50.67, 1000),
-        new Product(std::string("Banana"), Product::ProductType{}, 10.05, 2500),
-        new Product(std::string("Apple"), Product::ProductType{}, 6.75, 5000)
+        new Product(std::string("Treska"), "fish", 50.67, 1000),
+        new Product(std::string("Banana"), "fruit", 10.05, 2500),
+        new Product(std::string("Apple"), "fruit", 6.75, 5000)
     };
     std::cout << "1 < 2 = " << (productList[0] < productList[1]) << std::endl;
 
@@ -48,8 +48,7 @@ int AEnstain() {
 
 int LTorvalds() {
     using namespace YMM;
-    Product::ProductType product{};
-    Provider liunxBiography("Linus", "Torvalds", "GNU/Linux", "C is the way", product);
+    Provider liunxBiography("Linus", "Torvalds", "GNU/Linux", "C is the way", new Product("Linux", "software", 0.0, 50));
     //std::cout << liunxBiography << std::endl;
     //printData(liunxBiography);
     return 4;
@@ -71,8 +70,7 @@ int employer() {
 
 int provider() {
     using namespace YMM;
-    Product::ProductType myProduct{};
-    Provider Boss("Man", "Best", "lucky", "nopasswd", myProduct);
+    Provider Boss("Man", "Best", "lucky", "nopasswd", new Product("Computers", "hardware", 120.5, 300));
     //Boss.printData();
     std::cout << Boss << std::endl;
     return 7;
@@ -80,8 +78,7 @@ int provider() {
 
 int product() {
     using namespace YMM;
-    Product::ProductType myProduct{};
-    Product SomeProduct("Greatfruit", myProduct, 12.5, 800);
+    Product SomeProduct("Greatfruit", "fruit", 12.5, 800);
     //SomeProduct.printData();
     std::cout << SomeProduct << std::endl;
     return 8;
@@ -119,7 +116,7 @@ const int items_number = 8;
 int main() {
     using namespace YMM;
 
-    Product apples(std::string("Treska"), Product::ProductType{}, 50.67, 1000);
+    Product apples(std::string("Treska"), "fish", 50.67, 1000);
     User *data[2] {};
 
     data[0] = new Provider(
@@ -127,7 +124,7 @@ int main() {
             std::string("Organizator"), 
             std::string("Boss"), 
             std::string("strong_pswd"), 
-            apples.getProductType());
+            &apples);
 
     data [1] = new Employer(
             "hello",
