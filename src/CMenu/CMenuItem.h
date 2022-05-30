@@ -6,10 +6,12 @@ class CMenuItem {
     public:
         using Func = int(*)();
         CMenuItem(char *, Func);
+        CMenuItem(char *);
         Func m_func{};
         char *m_item_name{};
         char * getName();
-        void print();
+        void print() const;
+        bool isFunc() const;
         int run();
     };
 }

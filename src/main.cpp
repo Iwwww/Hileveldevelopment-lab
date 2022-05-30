@@ -1,27 +1,26 @@
+#include <cstdint>
 #include <iostream>
 #include <cmath>
 #include "CMenu/CMenu.h"
 #include "CMenu/CMenuItem.h"
+#include "Models/Product.h"
 #include "Models/User.h"
 #include "Models/Employer/Employer.h"
 #include "Models/Provider/Provider.h"
 
+const int MAX_ITEMS_COUNT = 50;
+
+int providers_count = 0;
+int employers_count = 0;
+
 #pragma region функции-заглушки
+
+#pragma region example-funcions
+
 int f1() {
-    using namespace YMM;
-    Product* productList[4]{
-        new Product(std::string("Treska"), "fish", 50.67, 1000),
-        new Product(std::string("Banana"), "fruit", 10.05, 2500),
-        new Product(std::string("Apple"), "fruit", 6.75, 5000)
-    };
-    std::cout << "1 < 2 = " << (productList[0] < productList[1]) << std::endl;
+    std::cout << "Sqrt(25) = " << sqrt(25) << '\n';
 
     return 1;
-}
-
-int HelloWorld() {
-    int i = 5;
-    return i;
 }
 
 int f2() {
@@ -29,153 +28,303 @@ int f2() {
         for (int j = 1; j < i; j++) { 
             std::cout << "* ";
         }
-    std::cout << "\n";
+        std::cout << "\n";
     }
-    std::cout << "function f2 is running...\n\n";
+
     return 2;
 }
 
-int AEnstain() {
-    using namespace YMM;
-    Employer worker("Albert", "Enstain", "emc2", "universe", "physicist");
-    std::cout << worker << std::endl;
-    std::cout << "======" << std::endl;
-    std::cin >> worker;
-    std::cout << "======" << std::endl;
-    std::cout << worker << std::endl;
+#pragma endregion example-funcions
+
+#pragma region Employers
+
+int addEmployers() {
+    return 1;
+};
+
+int deleteEmployers() {
+    return 2;
+};
+
+int sortEmployers() {
     return 3;
-}
+};
 
-int LTorvalds() {
-    using namespace YMM;
-    Provider liunxBiography("Linus", "Torvalds", "GNU/Linux", "C is the way", new Product("Linux", "software", 0.0, 50));
-    //std::cout << liunxBiography << std::endl;
-    //printData(liunxBiography);
+int showEmployers() {
     return 4;
-}
+};
 
-int employer() {
+void addEmployers(YMM::Employer *employer) {
     using namespace YMM;
-    // Employer Worker;
-    Employer Worker("hello", "Main", "yes", "monkey", "Pos");
-    Worker.setName("hello world");
-    Worker.setSurname("Master");
-    Worker.setLogin("Lololo");
-    Worker.setPosition("1234569878");
-    std::cout << Worker.getName() << std::endl;
-    //Worker.printData();
-    std::cout << Worker << std::endl;
-    return 6;
+    int count{};
+    std::cout << "Введите количество элементов: ";
+    std::cin >> count;
+    for (int i = employers_count; i < count; i++) {
+        std::cout << "=========" << "\n";
+        std::cin >> employer[i];
+    }
+    employers_count += count;
 }
 
-int provider() {
+void deleteEmployers(YMM::Employer *employer) {
     using namespace YMM;
-    Provider Boss("Man", "Best", "lucky", "nopasswd", new Product("Computers", "hardware", 120.5, 300));
-    //Boss.printData();
-    std::cout << Boss << std::endl;
-    return 7;
+    int index{};
+    std::cout << "Всего элементов: " << employers_count << "\n";
+    std::cout << "Удалить элемент номер: ";
+    std::cin >> index;
+    if (index > employers_count || index < 1) {
+        std::cout << "Не существует элемента с номером: " << index << "\n";
+    } else {
+        if (index != MAX_ITEMS_COUNT){
+            for (int i = index-1; i < employers_count; i++) {
+                employer[i] = employer[i+1];
+            }
+        }
+        employers_count--;
+    }
 }
 
-int product() {
+void sortEmployers(YMM::Employer *employer) {
     using namespace YMM;
-    Product SomeProduct("Greatfruit", "fruit", 12.5, 800);
-    //SomeProduct.printData();
-    std::cout << SomeProduct << std::endl;
-    return 8;
+    std::cout << "Сортировка ..." << "\n";
+    for (int i = 0; i < employers_count; i++) {
+        int index = i;
+        for (int j = i; j < employers_count; j++) {
+            if (employer[i] > employer[j]) {
+                if (index == i) {
+                    index = j;
+                } else if (j > index) {
+                    index = j;
+                }
+            }
+        }
+        Employer tmp = employer[i];
+        employer[i] = employer[index];
+        employer[index] = tmp;
+    }
 }
 
-int printProviderData() {
-    using namespace YMM; 
-    
-    std::cout << "Provider data" << std::endl;
+void showEmployers(YMM::Employer *employer) {
+    using namespace YMM;
+    std::cout << "Всего элементов: " << employers_count << "\n";
+    int index{};
+    std::cout << "Показать элемент номер: ";
+    std::cin >> index;
+    if (index > employers_count || index < 1) {
+        std::cout << "Не существует элемента с номером: " << index << "\n";
+    } else {
+        std::cout << employer[index-1];
+    }
+}
 
+#pragma endregion Employers
+
+#pragma region Providers
+
+int addProviders() {
     return 1;
+};
+
+int deleteProviders() {
+    return 2;
+};
+
+int sortProviders() {
+    return 3;
+};
+
+int showProviders() {
+    return 4;
+};
+
+void addProviders(YMM::Provider *providers) {
+    using namespace YMM;
+    int count{};
+    std::cout << "Введите количество элементов: ";
+    std::cin >> count;
+    for (int i = providers_count; i < count; i++) {
+        std::cout << "=========" << "\n";
+        std::cin >> providers[i];
+    }
+    providers_count += count;
 }
 
-int printEmployerData() {
-    using namespace YMM; 
-    
-    std::cout << "Employer data" << std::endl;
-    std::cout << "sd" << std::endl;
-
-    return 1;
+void deleteProviders(YMM::Provider *providers) {
+    using namespace YMM;
+    int index{};
+    std::cout << "Всего элементов: " << providers_count << "\n";
+    std::cout << "Удалить элемент номер: ";
+    std::cin >> index;
+    std::cout << "=========" << "\n";
+    if (index > providers_count || index < 1) {
+        std::cout << "Не существует элемента с номером: " << index << "\n";
+    } else {
+        if (index != MAX_ITEMS_COUNT){
+            for (int i = index-1; i < providers_count; i++) {
+                providers[i] = providers[i+1];
+            }
+        }
+        providers_count--;
+    }
 }
 
-int printProductData() {
-    using namespace YMM; 
-    
-    std::cout << "Product data" << std::endl;
-
-    return 1;
+void sortProviders(YMM::Provider *providers) {
+    using namespace YMM;
+    std::cout << "Сортировка ..." << "\n";
+    for (int i = 0; i < providers_count; i++) {
+        int index = i;
+        for (int j = i; j < providers_count; j++) {
+            if (providers[i] > providers[j]) {
+                if (index == i) {
+                    index = j;
+                } else if (j > index) {
+                    index = j;
+                }
+            }
+        }
+        Provider tmp = providers[i];
+        providers[i] = providers[index];
+        providers[index] = tmp;
+    }
 }
+
+void showProviders(YMM::Provider *providers) {
+    using namespace YMM;
+    std::cout << "Всего элементов: " << providers_count << "\n";
+    int index{};
+    std::cout << "Показать элемент номер: ";
+    std::cin >> index;
+    std::cout << "=========" << "\n";
+    if (index > providers_count || index < 1) {
+        std::cout << "Не существует элемента с номером: " << index << "\n";
+    } else {
+        std::cout << providers[index-1];
+    }
+}
+
+#pragma endregion Providers
 
 #pragma endregion функции-заглушки
-
-const int items_number = 8;
 
 int main() {
     using namespace YMM;
 
-    Product apples(std::string("Treska"), "fish", 50.67, 1000);
-    User *data[2] {};
+    const int items_number = 3;
 
-    data[0] = new Provider(
-            std::string("Nikita"),
-            std::string("Organizator"), 
-            std::string("Boss"), 
-            std::string("strong_pswd"), 
-            &apples);
+    // data
+    Provider *providers = new Provider[MAX_ITEMS_COUNT];
+    Employer *employers = new Employer[MAX_ITEMS_COUNT];
 
-    data [1] = new Employer(
-            "hello",
-            "Main",
-            "yes",
-            "monkey",
-            "Pos");
+    providers[0] = new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
+    providers[1] = new Provider("Abcd", "Surname", "MyLogin", "123", new Product("apple", "fruit", 10.2, 1500));
+    providers[2] = new Provider("Sticker", "Wander", "helper", "968", new Product("Magic wand", "wand", 7.0, 6500));
+    employers[0] = new Employer("Stive", "Jobs", "alive", "09876", "Boss");
+    employers[1] = new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
+    employers[2] = new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
+    providers_count = 3;
+    employers_count = 3;
 
+    // menu items
     CMenuItem subItems1[2] {
-        CMenuItem("sub 1-1", f1),
-        CMenuItem("sub 1-2", AEnstain)
+        CMenuItem("squrt(25)", f1),
+        CMenuItem("triangle", f2)
     };
 
-    CMenuItem subItems2[2] {
-        CMenuItem("sub 2-1", provider),
-        CMenuItem("sub 2-2", product)
+    CMenuItem employerItems[4] {
+        CMenuItem("Добавить", addEmployers),
+        CMenuItem("Удалить", deleteEmployers),
+        CMenuItem("Сортировать", sortEmployers),
+        CMenuItem("Вывести в консоль", showEmployers)
+    };
+
+    CMenuItem providerItems[4] {
+        CMenuItem("Добавить", addProviders),
+        CMenuItem("Удалить", deleteProviders),
+        CMenuItem("Сортировать", sortProviders),
+        CMenuItem("Вывести в консоль", showProviders)
+    };
+
+    CMenuItem producutItems[4] {
+        CMenuItem("Добавить", addProviders),
+        CMenuItem("Удалить", deleteProviders),
+        CMenuItem("Сортировать", sortProviders),
+        CMenuItem("Вывести в консоль", showProviders)
     };
 
     CMenuItem items[items_number] {
-        CMenuItem("first item", f1),
-        CMenuItem("second item", f2),
-        CMenuItem("Albert Enstain", AEnstain),
-        CMenuItem("Linux Torvalds", LTorvalds),
-        CMenuItem("fives item", f2),
-        CMenuItem("Employer", employer),
-        CMenuItem("Provider", provider),
-        CMenuItem("Product", product)
-
+        CMenuItem("Example functions"),
+        CMenuItem("Employer"),
+        CMenuItem("Provider")
     };
 
-    CMenu subMenuArr[2] {
+    CMenu subMenuArr[3] {
         CMenu("My sub menu 1", subItems1, 2),
-        CMenu("My sub menu 2", subItems2, 2)
+        CMenu("Employers", employerItems, 4),
+        CMenu("Providers", providerItems, 4)
     };
-    
+
     CMenu menu("My console menu", items, items_number);
-    while (menu.runCommand(subMenuArr)) {
-        switch (1) {
+ 
+    int *position = nullptr;
+    while (true) {
+        position = menu.runCommand(subMenuArr);
+        switch (position[0]) {
         case 1:
-          break;
+            switch (position[1]) {
+                case 1:
+                    f1();
+                    break;
+                case 2:
+                    f2();
+                    break;
+            }
+              break;
         case 2:
+            switch (position[1]) {
+                case 1:
+                    addEmployers(employers);
+                    std::cout << employers[0] << "\n";
+                    break;
+                case 2:
+                    deleteEmployers(employers);
+                    break;
+                case 3:
+                    sortEmployers(employers);
+                    break;
+                case 4:
+                    showEmployers(employers);
+                    break;
+                default:
+                    break;
+            }
           break;
         case 3:
-          break;
-        case 4:
-          break;
+            switch (position[1]) {
+                case 1:
+                    addProviders(providers);
+                    std::cout << providers[0] << "\n";
+                    break;
+                case 2:
+                    deleteProviders(providers);
+                    break;
+                case 3:
+                    sortProviders(providers);
+                    break;
+                case 4:
+                    showProviders(providers);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case -1:
         default:
-          break;
+            return 0;
+            break;
         }
-
-    };
+ 
+        std::cout << '\n';
+    }
 
     return 0;
 }

@@ -22,11 +22,13 @@ namespace YMM {
 
             friend std::ostream& operator<<(std::ostream&, Product&);
             friend std::istream& operator>>(std::istream&, Product&);
-
             friend bool operator>(const Product&, const Product&);
             friend bool operator<(const Product&, const Product&);
-
+            friend bool operator==(const Product&, const Product&);
+            friend bool operator!=(const Product&, const Product&);
             bool operator<(Product &object) const;
+            Product& operator=(const Product &obj);
+            Product* operator=(const Product *obj);
 
         protected:
             std::string m_title;

@@ -15,15 +15,17 @@ class CMenu {
         CMenuItem *getItems();
         void print();
         int runCommand();
-        int runCommand(CMenu*);
+        int runSubMenuCommand();
+        int *runCommand(CMenu*);
 
     private:
         int m_select{-1};
         size_t m_count{};
         bool m_running{};
-        char *m_title{};
+        char *m_title = nullptr;
         CMenuItem *m_items{};
         bool m_submenu{};
+        int m_position[2]{-1, -1};
     };
 }
 
