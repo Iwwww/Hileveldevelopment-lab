@@ -49,16 +49,6 @@ namespace YMM {
         return m_items[m_select - 1].run();
     }
 
-    int CMenu::runSubMenuCommand() {
-        print();
-        do {
-            std::cout << "\n Select l->> ";
-            std::cin >> m_select;
-        } while (m_select == -1 || m_select > m_count);
-
-        return m_select;
-    }
-
     int *CMenu::runCommand(CMenu *subMenu) {
         m_submenu = true;
         print();
@@ -79,5 +69,15 @@ namespace YMM {
 
         return m_position;
     } 
+
+    int CMenu::runSubMenuCommand() {
+        print();
+        do {
+            std::cout << "\n Select l->> ";
+            std::cin >> m_select;
+        } while (m_select == -1 || m_select > m_count);
+
+        return m_select;
+    }
 }
 

@@ -14,6 +14,7 @@ namespace YMM {
         std::cout << "Surname " << Employer::getSurname() << std::endl;
         std::cout << "Login " << Employer::getLogin() << std::endl;
         std::cout << "Password " << Employer::getPassword() << std::endl;
+        std::cout << "Position " << Employer::getPosition() << std::endl;
     }
 
     Employer::Employer() {}
@@ -60,6 +61,9 @@ namespace YMM {
 
         std::cout << "Password: ";
         std::cin >> object.m_password;
+
+        std::cout << "Position: ";
+        std::cin >> object.m_position;
 
         return in;
     }

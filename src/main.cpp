@@ -54,19 +54,19 @@ int showEmployers() {
     return 4;
 };
 
-void addEmployers(YMM::Employer *employer) {
+void addEmployers(YMM::Employer *employers) {
     using namespace YMM;
     int count{};
     std::cout << "Введите количество элементов: ";
     std::cin >> count;
-    for (int i = employers_count; i < count; i++) {
+    for (int i = employers_count; i < count + employers_count; i++) {
         std::cout << "=========" << "\n";
-        std::cin >> employer[i];
+        std::cin >> employers[i];
     }
     employers_count += count;
 }
 
-void deleteEmployers(YMM::Employer *employer) {
+void deleteEmployers(YMM::Employer *employers) {
     using namespace YMM;
     int index{};
     std::cout << "Всего элементов: " << employers_count << "\n";
@@ -77,20 +77,20 @@ void deleteEmployers(YMM::Employer *employer) {
     } else {
         if (index != MAX_ITEMS_COUNT){
             for (int i = index-1; i < employers_count; i++) {
-                employer[i] = employer[i+1];
+                employers[i] = employers[i+1];
             }
         }
         employers_count--;
     }
 }
 
-void sortEmployers(YMM::Employer *employer) {
+void sortEmployers(YMM::Employer *employers) {
     using namespace YMM;
     std::cout << "Сортировка ..." << "\n";
     for (int i = 0; i < employers_count; i++) {
         int index = i;
         for (int j = i; j < employers_count; j++) {
-            if (employer[i] > employer[j]) {
+            if (employers[i] > employers[j]) {
                 if (index == i) {
                     index = j;
                 } else if (j > index) {
@@ -98,13 +98,13 @@ void sortEmployers(YMM::Employer *employer) {
                 }
             }
         }
-        Employer tmp = employer[i];
-        employer[i] = employer[index];
-        employer[index] = tmp;
+        Employer tmp = employers[i];
+        employers[i] = employers[index];
+        employers[index] = tmp;
     }
 }
 
-void showEmployers(YMM::Employer *employer) {
+void showEmployers(YMM::Employer *employers) {
     using namespace YMM;
     std::cout << "Всего элементов: " << employers_count << "\n";
     int index{};
@@ -113,7 +113,7 @@ void showEmployers(YMM::Employer *employer) {
     if (index > employers_count || index < 1) {
         std::cout << "Не существует элемента с номером: " << index << "\n";
     } else {
-        std::cout << employer[index-1];
+        std::cout << employers[index-1];
     }
 }
 
@@ -142,7 +142,7 @@ void addProviders(YMM::Provider *providers) {
     int count{};
     std::cout << "Введите количество элементов: ";
     std::cin >> count;
-    for (int i = providers_count; i < count; i++) {
+    for (int i = providers_count; i < count + providers_count; i++) {
         std::cout << "=========" << "\n";
         std::cin >> providers[i];
     }
@@ -283,7 +283,6 @@ int main() {
             switch (position[1]) {
                 case 1:
                     addEmployers(employers);
-                    std::cout << employers[0] << "\n";
                     break;
                 case 2:
                     deleteEmployers(employers);
@@ -302,7 +301,6 @@ int main() {
             switch (position[1]) {
                 case 1:
                     addProviders(providers);
-                    std::cout << providers[0] << "\n";
                     break;
                 case 2:
                     deleteProviders(providers);

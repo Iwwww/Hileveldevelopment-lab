@@ -17,11 +17,6 @@ namespace YMM {
 
             virtual void printData() const = 0;
 
-            friend std::ostream& operator<<(std::ostream& out, User& object);
-            friend std::ostream& operator>>(std::ostream& in, User& object);
-
-            // User(std::string _name, std::string _surname, std::string _login, std::string _password);
-
         protected:
             std::string m_name;
             std::string m_surname;
