@@ -188,6 +188,17 @@ namespace YMM {
                 }
                 delete[] tmp;
             }
+            void removeMemory() {
+                if (m_capacity != 1) {
+                    m_capacity /= 2;
+                }               
+                T *tmp = m_items;
+                m_items = new T[m_capacity];
+                for (int i = 0; i < m_size; i++) {
+                    m_items[i] = tmp[i];
+                }
+                delete[] tmp;
+            }
 
         private:
            size_t m_size = 0;
