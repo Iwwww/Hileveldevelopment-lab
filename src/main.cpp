@@ -8,8 +8,7 @@
 #include "Models/User.h"
 #include "Models/Employer/Employer.h"
 #include "Models/Provider/Provider.h"
-
-const int MAX_ITEMS_COUNT = 50;
+#include "Containers/MyVector.h"
 
 #pragma region example-funcions
 
@@ -50,67 +49,54 @@ int showUser() {
 };
 
 template<typename T>
-void addUser(T *t) {
+void addUser(T &v) {
     using namespace YMM;
     int count{};
     std::cout << "Введите количество элементов: ";
     std::cin >> count;
-    for (int i = T::count; i < count + T::count; i++) {
+    while (count--) {
         std::cout << "=========" << "\n";
-        std::cin >> t[i];
+        auto *tmp = v[0].new_instance();
+        std::cin >> *tmp;
+        v += tmp;
     }
-    T::count += count;
 }
 
 template<typename T>
-void deleteUser(T *t) {
+void deleteUser(T &v) {
     using namespace YMM;
     int index{};
-    std::cout << "Всего элементов: " << T::count << "\n";
+    std::cout << "Всего элементов: " << v.size() << "\n";
     std::cout << "Удалить элемент номер: ";
     std::cin >> index;
-    if (index > T::count || index < 1) {
+    if (index > v.size() || index < 1) {
         std::cout << "Не существует элемента с номером: " << index << "\n";
     } else {
-        if (index != MAX_ITEMS_COUNT){
-            for (int i = index-1; i < T::count; i++) {
-                t[i] = t[i+1];
-            }
-        }
-        T::count--;
+        v.removeItem(index - 1);
     }
 }
 
 template<typename T>
-void sortUser(T *t) {
+void sortUser(T &t) {
     using namespace YMM;
     std::cout << "Сортировка ..." << "\n";
-    for (int i = 0; i < T::count; i++) {
-        int index = i;
-        for (int j = i; j < T::count; j++) {
-            if (t[i] > t[j]) {
-                if (index == i) {
-                    index = j;
-                } else if (j > index) {
-                    index = j;
-                }
-            }
-        }
-        T tmp = t[i];
-        t[i] = t[index];
-        t[index] = tmp;
-    }
+    t.sort();
 }
 
 template<typename T>
-void showUser(T *t) {
+void showUser(T &t) {
     using namespace YMM;
-    std::cout << "Всего элементов: " << T::count << "\n";
+    std::cout << "Всего элементов: " << t.size() << "\n";
     int index{};
     std::cout << "Показать элемент номер: ";
     std::cin >> index;
-    if (index > T::count || index < 1) {
+    if (index > t.size() || index < 0) {
         std::cout << "Не существует элемента с номером: " << index << "\n";
+    } else if (index == 0) {
+        for (auto item: t) {
+            std::cout << "=========" << std::endl;
+            std::cout << item;
+        }
     } else {
         std::cout << t[index-1];
     }
@@ -118,24 +104,22 @@ void showUser(T *t) {
 
 #pragma endregion User
 
-unsigned int YMM::Employer::count = 3;
-unsigned int YMM::Provider::count = 3;
-
 int main() {
     using namespace YMM;
 
-    const int items_number = 3;
-
     // data
-    Provider *providers = new Provider[MAX_ITEMS_COUNT];
-    Employer *employers = new Employer[MAX_ITEMS_COUNT];
+    MyVector<Provider> providers{};
+    MyVector<Employer> employers{};
 
-    providers[0] = new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
-    providers[1] = new Provider("Abcd", "Surname", "MyLogin", "123", new Product("apple", "fruit", 10.2, 1500));
-    providers[2] = new Provider("Sticker", "Wander", "helper", "968", new Product("Magic wand", "wand", 7.0, 6500));
-    employers[0] = new Employer("Stive", "Jobs", "alive", "09876", "Boss");
-    employers[1] = new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
-    employers[2] = new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
+    providers += new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
+    providers += new Provider("Abcd", "Surname", "MyLogin", "123", new Product("apple", "fruit", 10.2, 1500));
+    providers += new Provider("Sticker", "Wander", "helper", "968", new Product("Magic wand", "wand", 7.0, 6500));
+
+    employers += new Employer("Stive", "Jobs", "alive", "09876", "Boss");
+    employers += new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
+    employers += new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
+
+    const int items_count = 3;
 
     // menu items
     CMenuItem exampleItems[2] {
@@ -150,7 +134,7 @@ int main() {
         CMenuItem("Вывести в консоль", showUser)
     };
 
-    CMenuItem items[items_number] {
+    CMenuItem items[items_count] {
         CMenuItem("Example functions"),
         CMenuItem("Employer"),
         CMenuItem("Provider")
@@ -162,7 +146,7 @@ int main() {
         CMenu("Providers", userItems, 4)
     };
 
-    CMenu menu("My console menu", items, items_number);
+    CMenu menu("My console menu", items, items_count);
  
     int *position = nullptr;
     while (true) {
@@ -181,16 +165,16 @@ int main() {
         case 2:
             switch (position[1]) {
                 case 1:
-                    addUser<Employer>(employers);
+                    addUser<MyVector<Employer>>(employers);
                     break;
                 case 2:
-                    deleteUser<Employer>(employers);
+                    deleteUser<MyVector<Employer>>(employers);
                     break;
                 case 3:
-                    sortUser<Employer>(employers);
+                    sortUser<MyVector<Employer>>(employers);
                     break;
                 case 4:
-                    showUser<Employer>(employers);
+                    showUser<MyVector<Employer>>(employers);
                     break;
                 default:
                     break;
@@ -199,16 +183,16 @@ int main() {
         case 3:
             switch (position[1]) {
                 case 1:
-                    addUser<Provider>(providers);
+                    addUser<MyVector<Provider>>(providers);
                     break;
                 case 2:
-                    deleteUser<Provider>(providers);
+                    deleteUser<MyVector<Provider>>(providers);
                     break;
                 case 3:
-                    sortUser<Provider>(providers);
+                    sortUser<MyVector<Provider>>(providers);
                     break;
                 case 4:
-                    showUser<Provider>(providers);
+                    showUser<MyVector<Provider>>(providers);
                     break;
                 default:
                     break;
