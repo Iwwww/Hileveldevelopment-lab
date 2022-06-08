@@ -136,12 +136,10 @@ namespace YMM {
            T *m_items{};
 
            void initItem() {
-               m_size = 1;
+               m_size = 0;
                m_capacity = 1;
-               m_items = new T[m_size]{};
+               m_items = new T[m_capacity]{};
            }
     };
 }
 
-// template<typename T>
-// std::ostream &operator<<(std::ostream& out, const YMM::MyVector<T> &items);
