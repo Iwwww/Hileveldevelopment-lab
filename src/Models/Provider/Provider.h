@@ -7,6 +7,8 @@
 namespace YMM {
     class Provider : public User, public Product {
         public:
+            static unsigned int count;
+
             Provider();
             Provider(std::string _name, std::string _surname, std::string _login, std::string _password, Product *);
 

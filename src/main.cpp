@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <ctime>
 #include <iostream>
 #include <cmath>
 #include "CMenu/CMenu.h"
@@ -10,87 +11,83 @@
 
 const int MAX_ITEMS_COUNT = 50;
 
-int providers_count = 0;
-int employers_count = 0;
-
 #pragma region функции-заглушки
 
 #pragma region example-funcions
 
-int f1() {
+void f1(void) {
     std::cout << "Sqrt(25) = " << sqrt(25) << '\n';
-
-    return 1;
 }
 
-int f2() {
+void f2(void) {
     for (int i = 1; i < 8; i++) {
         for (int j = 1; j < i; j++) { 
             std::cout << "* ";
         }
         std::cout << "\n";
     }
-
-    return 2;
 }
 
 #pragma endregion example-funcions
 
 #pragma region Employers
 
-int addEmployers() {
+/* int addUser() {
     return 1;
 };
 
-int deleteEmployers() {
+int deleteUser() {
     return 2;
 };
 
-int sortEmployers() {
+int sortUser() {
     return 3;
 };
 
-int showEmployers() {
+int showUser() {
     return 4;
 };
-
-void addEmployers(YMM::Employer *employers) {
+ */
+template<typename T>
+void addUser(T *t) {
     using namespace YMM;
     int count{};
     std::cout << "Введите количество элементов: ";
     std::cin >> count;
-    for (int i = employers_count; i < count + employers_count; i++) {
+    for (int i = T::count; i < count + T::count; i++) {
         std::cout << "=========" << "\n";
-        std::cin >> employers[i];
+        std::cin >> t[i];
     }
-    employers_count += count;
+    T::count += count;
 }
 
-void deleteEmployers(YMM::Employer *employers) {
+template<typename T>
+void deleteUser(T *t) {
     using namespace YMM;
     int index{};
-    std::cout << "Всего элементов: " << employers_count << "\n";
+    std::cout << "Всего элементов: " << T::count << "\n";
     std::cout << "Удалить элемент номер: ";
     std::cin >> index;
-    if (index > employers_count || index < 1) {
+    if (index > T::count || index < 1) {
         std::cout << "Не существует элемента с номером: " << index << "\n";
     } else {
         if (index != MAX_ITEMS_COUNT){
-            for (int i = index-1; i < employers_count; i++) {
-                employers[i] = employers[i+1];
+            for (int i = index-1; i < T::count; i++) {
+                t[i] = t[i+1];
             }
         }
-        employers_count--;
+        T::count--;
     }
 }
 
-void sortEmployers(YMM::Employer *employers) {
+template<typename T>
+void sortUser(T *t) {
     using namespace YMM;
     std::cout << "Сортировка ..." << "\n";
-    for (int i = 0; i < employers_count; i++) {
+    for (int i = 0; i < T::count; i++) {
         int index = i;
-        for (int j = i; j < employers_count; j++) {
-            if (employers[i] > employers[j]) {
+        for (int j = i; j < T::count; j++) {
+            if (t[i] > t[j]) {
                 if (index == i) {
                     index = j;
                 } else if (j > index) {
@@ -98,27 +95,29 @@ void sortEmployers(YMM::Employer *employers) {
                 }
             }
         }
-        Employer tmp = employers[i];
-        employers[i] = employers[index];
-        employers[index] = tmp;
+        Employer tmp = t[i];
+        t[i] = t[index];
+        t[index] = tmp;
     }
 }
 
-void showEmployers(YMM::Employer *employers) {
+template<typename T>
+void showUser(T *t) {
     using namespace YMM;
-    std::cout << "Всего элементов: " << employers_count << "\n";
+    std::cout << "Всего элементов: " << T::count << "\n";
     int index{};
     std::cout << "Показать элемент номер: ";
     std::cin >> index;
-    if (index > employers_count || index < 1) {
+    if (index > T::count || index < 1) {
         std::cout << "Не существует элемента с номером: " << index << "\n";
     } else {
-        std::cout << employers[index-1];
+        std::cout << t[index-1];
     }
 }
 
 #pragma endregion Employers
 
+/* 
 #pragma region Providers
 
 int addProviders() {
@@ -203,8 +202,12 @@ void showProviders(YMM::Provider *providers) {
 }
 
 #pragma endregion Providers
+*/
 
 #pragma endregion функции-заглушки
+
+unsigned int YMM::Employer::count = 3;
+unsigned int YMM::Provider::count = 3;
 
 int main() {
     using namespace YMM;
@@ -221,22 +224,20 @@ int main() {
     employers[0] = new Employer("Stive", "Jobs", "alive", "09876", "Boss");
     employers[1] = new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
     employers[2] = new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
-    providers_count = 3;
-    employers_count = 3;
 
     // menu items
-    CMenuItem subItems1[2] {
+    CMenuItem exampleItems[2] {
         CMenuItem("squrt(25)", f1),
         CMenuItem("triangle", f2)
     };
 
-    CMenuItem employerItems[4] {
-        CMenuItem("Добавить", addEmployers),
-        CMenuItem("Удалить", deleteEmployers),
-        CMenuItem("Сортировать", sortEmployers),
-        CMenuItem("Вывести в консоль", showEmployers)
+    CMenuItem userItems[4] {
+        CMenuItem("Добавить", addUser),
+        CMenuItem("Удалить", deleteUser),
+        CMenuItem("Сортировать", sortUser),
+        CMenuItem("Вывести в консоль", showUser)
     };
-
+/* 
     CMenuItem providerItems[4] {
         CMenuItem("Добавить", addProviders),
         CMenuItem("Удалить", deleteProviders),
@@ -250,7 +251,7 @@ int main() {
         CMenuItem("Сортировать", sortProviders),
         CMenuItem("Вывести в консоль", showProviders)
     };
-
+ */
     CMenuItem items[items_number] {
         CMenuItem("Example functions"),
         CMenuItem("Employer"),
@@ -258,9 +259,9 @@ int main() {
     };
 
     CMenu subMenuArr[3] {
-        CMenu("My sub menu 1", subItems1, 2),
-        CMenu("Employers", employerItems, 4),
-        CMenu("Providers", providerItems, 4)
+        CMenu("My sub menu 1", exampleItems, 2),
+        CMenu("Employers", userItems, 4),
+        CMenu("Providers", userItems, 4)
     };
 
     CMenu menu("My console menu", items, items_number);
@@ -282,16 +283,16 @@ int main() {
         case 2:
             switch (position[1]) {
                 case 1:
-                    addEmployers(employers);
+                    addUser<Employer>(employers);
                     break;
                 case 2:
-                    deleteEmployers(employers);
+                    deleteUser<Employer>(employers);
                     break;
                 case 3:
-                    sortEmployers(employers);
+                    sortUser<Employer>(employers);
                     break;
                 case 4:
-                    showEmployers(employers);
+                    showUser<Employer>(employers);
                     break;
                 default:
                     break;
@@ -300,16 +301,16 @@ int main() {
         case 3:
             switch (position[1]) {
                 case 1:
-                    addProviders(providers);
+                    addUser<Provider>(providers);
                     break;
                 case 2:
-                    deleteProviders(providers);
+                    deleteUser<Provider>(providers);
                     break;
                 case 3:
-                    sortProviders(providers);
+                    sortUser<Provider>(providers);
                     break;
                 case 4:
-                    showProviders(providers);
+                    showUser<Provider>(providers);
                     break;
                 default:
                     break;

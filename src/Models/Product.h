@@ -5,6 +5,8 @@
 namespace YMM {
     class Product {
         public:
+            static unsigned int count;
+
             std::string getTitle() const;
             float getPrice() const;
             int getAmount() const;

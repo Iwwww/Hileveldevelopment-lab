@@ -6,8 +6,10 @@
 namespace YMM {
     class Employer:public User {
         public:
+            static unsigned int count;
 
             std::string getPosition() const;
+            int getCount() const;
 
             void setPosition(std::string _position);
 
