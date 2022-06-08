@@ -11,28 +11,29 @@
 
 const int MAX_ITEMS_COUNT = 50;
 
-#pragma region функции-заглушки
-
 #pragma region example-funcions
 
-void f1(void) {
+int f1() {
     std::cout << "Sqrt(25) = " << sqrt(25) << '\n';
+    return 1;
 }
 
-void f2(void) {
+int f2() {
     for (int i = 1; i < 8; i++) {
         for (int j = 1; j < i; j++) { 
             std::cout << "* ";
         }
         std::cout << "\n";
     }
+
+    return 2;
 }
 
 #pragma endregion example-funcions
 
-#pragma region Employers
+#pragma region User
 
-/* int addUser() {
+int addUser() {
     return 1;
 };
 
@@ -47,7 +48,7 @@ int sortUser() {
 int showUser() {
     return 4;
 };
- */
+
 template<typename T>
 void addUser(T *t) {
     using namespace YMM;
@@ -95,7 +96,7 @@ void sortUser(T *t) {
                 }
             }
         }
-        Employer tmp = t[i];
+        T tmp = t[i];
         t[i] = t[index];
         t[index] = tmp;
     }
@@ -115,96 +116,7 @@ void showUser(T *t) {
     }
 }
 
-#pragma endregion Employers
-
-/* 
-#pragma region Providers
-
-int addProviders() {
-    return 1;
-};
-
-int deleteProviders() {
-    return 2;
-};
-
-int sortProviders() {
-    return 3;
-};
-
-int showProviders() {
-    return 4;
-};
-
-void addProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    int count{};
-    std::cout << "Введите количество элементов: ";
-    std::cin >> count;
-    for (int i = providers_count; i < count + providers_count; i++) {
-        std::cout << "=========" << "\n";
-        std::cin >> providers[i];
-    }
-    providers_count += count;
-}
-
-void deleteProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    int index{};
-    std::cout << "Всего элементов: " << providers_count << "\n";
-    std::cout << "Удалить элемент номер: ";
-    std::cin >> index;
-    std::cout << "=========" << "\n";
-    if (index > providers_count || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else {
-        if (index != MAX_ITEMS_COUNT){
-            for (int i = index-1; i < providers_count; i++) {
-                providers[i] = providers[i+1];
-            }
-        }
-        providers_count--;
-    }
-}
-
-void sortProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    std::cout << "Сортировка ..." << "\n";
-    for (int i = 0; i < providers_count; i++) {
-        int index = i;
-        for (int j = i; j < providers_count; j++) {
-            if (providers[i] > providers[j]) {
-                if (index == i) {
-                    index = j;
-                } else if (j > index) {
-                    index = j;
-                }
-            }
-        }
-        Provider tmp = providers[i];
-        providers[i] = providers[index];
-        providers[index] = tmp;
-    }
-}
-
-void showProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    std::cout << "Всего элементов: " << providers_count << "\n";
-    int index{};
-    std::cout << "Показать элемент номер: ";
-    std::cin >> index;
-    std::cout << "=========" << "\n";
-    if (index > providers_count || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else {
-        std::cout << providers[index-1];
-    }
-}
-
-#pragma endregion Providers
-*/
-
-#pragma endregion функции-заглушки
+#pragma endregion User
 
 unsigned int YMM::Employer::count = 3;
 unsigned int YMM::Provider::count = 3;
@@ -237,21 +149,7 @@ int main() {
         CMenuItem("Сортировать", sortUser),
         CMenuItem("Вывести в консоль", showUser)
     };
-/* 
-    CMenuItem providerItems[4] {
-        CMenuItem("Добавить", addProviders),
-        CMenuItem("Удалить", deleteProviders),
-        CMenuItem("Сортировать", sortProviders),
-        CMenuItem("Вывести в консоль", showProviders)
-    };
 
-    CMenuItem producutItems[4] {
-        CMenuItem("Добавить", addProviders),
-        CMenuItem("Удалить", deleteProviders),
-        CMenuItem("Сортировать", sortProviders),
-        CMenuItem("Вывести в консоль", showProviders)
-    };
- */
     CMenuItem items[items_number] {
         CMenuItem("Example functions"),
         CMenuItem("Employer"),
