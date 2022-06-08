@@ -1,10 +1,10 @@
-#pragma onec
 #include "Provider.h"
 
 namespace YMM {
     Provider::Provider() {
         m_product = new Product();
     }
+
     Provider::Provider(std::string _name, std::string _surname, std::string _login, std::string _password, Product *_product) {
         m_name = _name;
         m_surname = _surname;
@@ -13,11 +13,16 @@ namespace YMM {
         m_product = _product;
     }
 
+    Provider::~Provider() {
+        delete m_product;
+    }
+
      void Provider::printData() const {
         std::cout << "Name: " << Provider::getName() << "\n";
         std::cout << "Surname: " << Provider::getSurname() << "\n";
         std::cout << "Login: " << Provider::getLogin() << "\n";
         std::cout << "Password: " << Provider::getPassword() << "\n";
+        std::cout << "---------" << "\n";
         std::cout << Provider::m_product;
     }
 
@@ -28,8 +33,6 @@ namespace YMM {
         std::cout << "Password: " << object.getPassword() << "\n";
         std::cout << "---------" << "\n";
         std::cout << *object.m_product;
-
-       // object.printData();
 
         return out;
     }
@@ -87,5 +90,9 @@ namespace YMM {
         m_password = obj->m_password;
         m_product = obj->m_product;
         return this;
+    }
+
+    Provider* Provider::new_instance() {
+        return new Provider();
     }
 }

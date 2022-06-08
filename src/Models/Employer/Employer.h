@@ -6,17 +6,14 @@
 namespace YMM {
     class Employer:public User {
         public:
-            static unsigned int count;
+            Employer();
+            Employer(std::string _name, std::string _surname, std::string _login, std::string _password, std::string _position);
 
             std::string getPosition() const;
-            int getCount() const;
 
             void setPosition(std::string _position);
 
             void printData() const;
-
-            Employer();
-            Employer(std::string _name, std::string _surname, std::string _login, std::string _password, std::string _position);
 
             friend std::ostream& operator<<(std::ostream& out, Employer& object);
             friend std::istream& operator>>(std::istream& in, Employer& object);
@@ -26,6 +23,8 @@ namespace YMM {
             friend bool operator!=(const Employer &item_1, const Employer &item_2);
             Employer& operator=(Employer &obj);
             Employer* operator=(Employer *obj);
+
+            Employer* new_instance();
 
         private:
             std::string m_position;

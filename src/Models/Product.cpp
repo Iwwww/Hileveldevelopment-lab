@@ -1,4 +1,3 @@
-#include <string>
 #include "Product.h"
 
 namespace YMM {
@@ -15,6 +14,8 @@ namespace YMM {
         m_price = _price;
         m_amount = _amount;
     }
+
+    Product::~Product() {}
 
     std::string Product::getTitle() const {
         return m_title;

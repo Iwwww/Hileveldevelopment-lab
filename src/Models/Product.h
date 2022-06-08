@@ -5,7 +5,9 @@
 namespace YMM {
     class Product {
         public:
-            static unsigned int count;
+            Product();
+            Product(std::string, std::string, float, int);
+            ~Product();
 
             std::string getTitle() const;
             float getPrice() const;
@@ -18,9 +20,6 @@ namespace YMM {
             void setAmount(int);
 
             void printData() const;
-
-            Product();
-            Product(std::string, std::string, float, int);
 
             friend std::ostream& operator<<(std::ostream&, Product&);
             friend std::istream& operator>>(std::istream&, Product&);
