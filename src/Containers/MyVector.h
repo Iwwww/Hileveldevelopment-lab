@@ -179,6 +179,13 @@ namespace YMM {
                 m_items[m_size++] = item;
             }
 
+            void addItem() {
+                if (m_size >= m_capacity) {
+                    addMemory();
+                }
+                m_items[m_size++] = new T{};
+            }
+
             void addMemory() {
                 m_capacity *= 2;
                 T *tmp = m_items;
