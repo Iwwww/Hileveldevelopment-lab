@@ -156,7 +156,7 @@ namespace YMM {
                 }
 
                 // Remove memory if needed
-                if (m_size / m_capacity > 2) {
+                if (m_capacity / m_size > 2) {
                     removeMemory();
                 }
             }
