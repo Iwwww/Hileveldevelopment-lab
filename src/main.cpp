@@ -56,9 +56,8 @@ void addUser(T &v) {
     std::cin >> count;
     while (count--) {
         std::cout << "=========" << "\n";
-        auto *tmp = v[0].new_instance();
-        std::cin >> *tmp;
-        v += tmp;
+        v.addItem();
+        std::cin >> v[v.size() - 1];
     }
 }
 
