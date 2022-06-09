@@ -108,8 +108,8 @@ int main() {
     using namespace YMM;
 
     // data
-    MyVector<Provider> providers{};
-    MyVector<Employer> employers{};
+    MyVector<Provider> providers;
+    MyVector<Employer> employers;
     // Provider 
 
     providers += new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
