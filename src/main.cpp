@@ -95,7 +95,7 @@ void showUser(T &v) {
     } else if (index == 0) {
         for (auto item: v) {
             std::cout << "=========" << std::endl;
-            std::cout << item;
+            std::cout << item << std::endl;
         }
     } else {
         std::cout << v[index - 1];
