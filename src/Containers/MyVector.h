@@ -207,6 +207,10 @@ namespace YMM {
                 delete[] tmp;
             }
 
+            int capacity() {
+                return m_capacity;
+            }
+
         private:
            size_t m_size = 0;
            size_t m_capacity = 1;
