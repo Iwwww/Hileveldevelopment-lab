@@ -32,9 +32,9 @@ namespace YMM {
             Product* operator=(const Product *obj);
 
         protected:
-            std::string m_title;
-            std::string m_productType;
-            float m_price;
-            int m_amount;
+            std::string m_title{};
+            std::string m_productType{};
+            float m_price{};
+            int m_amount{};
     };
 }

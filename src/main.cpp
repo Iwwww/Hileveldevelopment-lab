@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iostream>
 #include <cmath>
+#include <iterator>
 #include "CMenu/CMenu.h"
 #include "CMenu/CMenuItem.h"
 #include "Models/Product.h"
@@ -54,7 +55,7 @@ void addUser(T &v) {
     int count{};
     std::cout << "Введите количество элементов: ";
     std::cin >> count;
-    while (count--) {
+    for (int i = 0; i < count; i++) {
         std::cout << "=========" << "\n";
         v.addItem();
         std::cin >> v[v.size() - 1];
@@ -76,28 +77,28 @@ void deleteUser(T &v) {
 }
 
 template<typename T>
-void sortUser(T &t) {
+void sortUser(T &v) {
     using namespace YMM;
     std::cout << "Сортировка ..." << "\n";
-    t.sort();
+    v.sort();
 }
 
 template<typename T>
-void showUser(T &t) {
+void showUser(T &v) {
     using namespace YMM;
-    std::cout << "Всего элементов: " << t.size() << "\n";
+    std::cout << "Всего элементов: " << v.size() << "\n";
     int index{};
     std::cout << "Показать элемент номер: ";
     std::cin >> index;
-    if (index > t.size() || index < 0) {
+    if (index > v.size() || index < 0) {
         std::cout << "Не существует элемента с номером: " << index << "\n";
     } else if (index == 0) {
-        for (auto item: t) {
+        for (auto item: v) {
             std::cout << "=========" << std::endl;
             std::cout << item;
         }
     } else {
-        std::cout << t[index-1];
+        std::cout << v[index - 1];
     }
 }
 
@@ -109,6 +110,7 @@ int main() {
     // data
     MyVector<Provider> providers{};
     MyVector<Employer> employers{};
+    // Provider 
 
     providers += new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
     providers += new Provider("Abcd", "Surname", "MyLogin", "123", new Product("apple", "fruit", 10.2, 1500));
@@ -117,6 +119,8 @@ int main() {
     employers += new Employer("Stive", "Jobs", "alive", "09876", "Boss");
     employers += new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
     employers += new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
+
+    providers.sort();
 
     const int items_count = 3;
 

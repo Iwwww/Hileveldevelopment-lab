@@ -23,7 +23,7 @@ namespace YMM {
         std::cout << "Login: " << Provider::getLogin() << "\n";
         std::cout << "Password: " << Provider::getPassword() << "\n";
         std::cout << "---------" << "\n";
-        std::cout << Provider::m_product;
+        std::cout << Provider::m_product << std::endl;
     }
 
    std::ostream& operator<<(std::ostream& out, Provider& object) {
@@ -32,7 +32,7 @@ namespace YMM {
         std::cout << "Login: " << object.getLogin() << "\n";
         std::cout << "Password: " << object.getPassword() << "\n";
         std::cout << "---------" << "\n";
-        std::cout << *object.m_product;
+        std::cout << *object.m_product << std::endl;
 
         return out;
     }

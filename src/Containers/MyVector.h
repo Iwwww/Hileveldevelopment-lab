@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cstddef>
+#include <type_traits>
 
 namespace YMM {
     template<class T> class MyVector {
@@ -77,13 +78,6 @@ namespace YMM {
                 return *this;
             }
 
-            friend std::istream& operator>>(std::istream& in, const MyVector<T> &items) {
-                for (int i = 0; i < items.m_size; i++) {
-                    in >> items[i];
-                }
-                return in;
-            } 
-
             iterator begin() const {
                 return iterator(&m_items[0]);
             }
@@ -109,7 +103,8 @@ namespace YMM {
                             }
                         }
                     }
-                    T tmp = m_items[i];
+                    T tmp{};
+                    tmp = m_items[i];
                     m_items[i] = m_items[max_index];
                     m_items[max_index] = tmp;
                 }
@@ -157,7 +152,7 @@ namespace YMM {
 
                 // Remove memory if needed
                 if (m_capacity / m_size > 2) {
-                    removeMemory();
+                    clearMemory();
                 }
             }
 
@@ -187,15 +182,15 @@ namespace YMM {
             }
 
             void addMemory() {
-                m_capacity *= 2;
+                m_capacity = m_size * 2;
                 T *tmp = m_items;
-                m_items = new T[m_capacity];
+                m_items = new T[m_capacity]{};
                 for (int i = 0; i < m_size; i++) {
                     m_items[i] = tmp[i];
                 }
-                delete[] tmp;
+                // delete[] tmp;
             }
-            void removeMemory() {
+            void clearMemory() {
                 if (m_capacity != 1) {
                     m_capacity /= 2;
                 }               
@@ -204,12 +199,22 @@ namespace YMM {
                 for (int i = 0; i < m_size; i++) {
                     m_items[i] = tmp[i];
                 }
-                delete[] tmp;
+                // switch (std::rank<T*>()) {
+                    // case 0:
+                        // delete tmp;
+                        // break;
+                    // case 1:
+                        // delete[] tmp;
+                // }
             }
 
             int capacity() {
                 return m_capacity;
             }
+        friend std::ostream& operator<<(std::ostream& out, const T& item) {
+            out << item << std::endl;
+            return out;
+        }
 
         private:
            size_t m_size = 0;
@@ -224,3 +229,4 @@ namespace YMM {
     };
 }
 
+// template<typename T>
