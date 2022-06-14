@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstddef>
 #include <type_traits>
+#include <exception>
 
 namespace YMM {
     template<class T> class MyVector {

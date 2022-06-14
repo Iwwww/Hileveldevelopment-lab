@@ -3,6 +3,10 @@
 #include <iostream>
 #include <cmath>
 #include <iterator>
+#include <new>
+#include <stdexcept>
+#include <execution>
+#include <string>
 #include "CMenu/CMenu.h"
 #include "CMenu/CMenuItem.h"
 #include "Models/Product.h"
@@ -54,10 +58,32 @@ void addUser(T &v) {
     using namespace YMM;
     int count{};
     std::cout << "Введите количество элементов: ";
-    std::cin >> count;
+    try {
+        std::string tmp_str{};
+        std::cin >> tmp_str;
+        count = std::stoi(tmp_str);
+        if (count < 1) throw ("invalid value");
+
+    } catch(const char* exception) {
+        std::cout << "error: " << exception << std::endl;
+    } catch(std::invalid_argument exception) {
+        std::cout << "error: only numbers are allowed" << std::endl;
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(std::out_of_range exception) {
+        std::cout << "error: too big number";
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(...) {
+        std::cout << "error:: unknown error" << std::endl;
+    }
+
+
     for (int i = 0; i < count; i++) {
         std::cout << "=========" << "\n";
-        v.addItem();
+        try {
+            v.addItem();
+        } catch(std::bad_alloc) {
+            std::cout << "error: can not allocate enough memory" << std::endl;
+        }
         std::cin >> v[v.size() - 1];
     }
 }
@@ -68,12 +94,25 @@ void deleteUser(T &v) {
     int index{};
     std::cout << "Всего элементов: " << v.size() << "\n";
     std::cout << "Удалить элемент номер: ";
-    std::cin >> index;
-    if (index > v.size() || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else {
-        v.removeItem(index - 1);
+    try {
+        std::string tmp_str{};
+        std::cin >> tmp_str;
+        index = std::stoi(tmp_str);
+        if (index > v.size() || index < 1) throw ("invalid value");
+
+    } catch(const char* exception) {
+        std::cout << "error: " << exception << std::endl;
+    } catch(std::invalid_argument exception) {
+        std::cout << "error: only numbers are allowed" << std::endl;
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(std::out_of_range exception) {
+        std::cout << "error: too big number";
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(...) {
+        std::cout << "error:: unknown error" << std::endl;
     }
+
+    v.removeItem(index - 1);
 }
 
 template<typename T>
@@ -89,10 +128,25 @@ void showUser(T &v) {
     std::cout << "Всего элементов: " << v.size() << "\n";
     int index{};
     std::cout << "Показать элемент номер: ";
-    std::cin >> index;
-    if (index > v.size() || index < 0) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else if (index == 0) {
+    try {
+        std::string tmp_str{};
+        std::cin >> tmp_str;
+        index = std::stoi(tmp_str);
+        if (index > v.size() || index < 0) throw ("invalid value");
+
+    } catch(const char* exception) {
+        std::cout << "error: " << exception << std::endl;
+    } catch(std::invalid_argument exception) {
+        std::cout << "error: only numbers are allowed" << std::endl;
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(std::out_of_range exception) {
+        std::cout << "error: too big number";
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(...) {
+        std::cout << "error:: unknown error" << std::endl;
+    }
+
+    if (index == 0) {
         for (auto item: v) {
             std::cout << "=========" << std::endl;
             std::cout << item << std::endl;
@@ -168,16 +222,36 @@ int main() {
         case 2:
             switch (position[1]) {
                 case 1:
-                    addUser<MyVector<Employer>>(employers);
+                    try {
+                        addUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 2:
-                    deleteUser<MyVector<Employer>>(employers);
+                    try {
+                        deleteUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 3:
-                    sortUser<MyVector<Employer>>(employers);
+                    try {
+                        sortUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 4:
-                    showUser<MyVector<Employer>>(employers);
+                    try {
+                        showUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 default:
                     break;
@@ -186,16 +260,36 @@ int main() {
         case 3:
             switch (position[1]) {
                 case 1:
-                    addUser<MyVector<Provider>>(providers);
+                    try {
+                        addUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 2:
-                    deleteUser<MyVector<Provider>>(providers);
+                    try {
+                        deleteUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 3:
-                    sortUser<MyVector<Provider>>(providers);
+                    try {
+                        sortUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 4:
-                    showUser<MyVector<Provider>>(providers);
+                    try {
+                        showUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 default:
                     break;

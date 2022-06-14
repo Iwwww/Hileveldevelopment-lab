@@ -8,13 +8,7 @@ namespace YMM {
         m_amount = 0;
     }
 
-    Product::Product(std::string _title, std::string _productType, float _price, int _amount) {
-        m_title = _title;
-        m_productType = _productType;
-        m_price = _price;
-        m_amount = _amount;
-    }
-
+    Product::Product(std::string _title, std::string _productType, float _price, int _amount) : m_title(_title), m_productType(_productType), m_price(_price), m_amount(_amount) {}
     Product::~Product() {}
 
     std::string Product::getTitle() const {
