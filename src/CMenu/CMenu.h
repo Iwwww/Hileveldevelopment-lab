@@ -7,6 +7,8 @@
 namespace YMM {
 class CMenu {
     public:
+        inline static int position[2] {0, 0};
+
         CMenu(char *, CMenuItem *, size_t);
         int getSelect() const;
         bool isRun() const;
@@ -15,8 +17,8 @@ class CMenu {
         CMenuItem *getItems();
         void print();
         int runCommand();
-        int runSubMenuCommand();
-        int *runCommand(CMenu*);
+        void runSubMenuCommand();
+        void runCommand(CMenu*);
 
     private:
         int m_select{-1};

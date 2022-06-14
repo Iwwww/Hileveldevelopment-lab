@@ -174,8 +174,6 @@ int main() {
     employers += new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
     employers += new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
 
-    providers.sort();
-
     const int items_count = 3;
 
     // menu items
@@ -205,12 +203,11 @@ int main() {
 
     CMenu menu("My console menu", items, items_count);
  
-    int *position = nullptr;
     while (true) {
-        position = menu.runCommand(subMenuArr);
-        switch (position[0]) {
+        menu.runCommand(subMenuArr);
+        switch (CMenu::position[0]) {
         case 1:
-            switch (position[1]) {
+            switch (CMenu::position[1]) {
                 case 1:
                     f1();
                     break;
@@ -218,9 +215,9 @@ int main() {
                     f2();
                     break;
             }
-              break;
+            break;
         case 2:
-            switch (position[1]) {
+            switch (CMenu::position[1]) {
                 case 1:
                     try {
                         addUser<MyVector<Employer>>(employers);
@@ -258,7 +255,7 @@ int main() {
             }
           break;
         case 3:
-            switch (position[1]) {
+            switch (CMenu::position[1]) {
                 case 1:
                     try {
                         addUser<MyVector<Provider>>(providers);
@@ -295,12 +292,14 @@ int main() {
                     break;
             }
             break;
-        case -1:
-        default:
+        case 0:
             return 0;
+            break;
+        default:
             break;
         }
  
+        // CMenu::position[1] = 0;
         std::cout << '\n';
     }
 
