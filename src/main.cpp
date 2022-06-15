@@ -205,9 +205,9 @@ int main() {
  
     while (true) {
         menu.runCommand(subMenuArr);
-        switch (CMenu::position[0]) {
+        switch (menu.getPosition()[0]) {
         case 1:
-            switch (CMenu::position[1]) {
+            switch (menu.getPosition()[1]) {
                 case 1:
                     f1();
                     break;
@@ -217,7 +217,7 @@ int main() {
             }
             break;
         case 2:
-            switch (CMenu::position[1]) {
+            switch (menu.getPosition()[1]) {
                 case 1:
                     try {
                         addUser<MyVector<Employer>>(employers);
@@ -255,7 +255,7 @@ int main() {
             }
           break;
         case 3:
-            switch (CMenu::position[1]) {
+            switch (menu.getPosition()[1]) {
                 case 1:
                     try {
                         addUser<MyVector<Provider>>(providers);
@@ -299,7 +299,6 @@ int main() {
             break;
         }
  
-        // CMenu::position[1] = 0;
         std::cout << '\n';
     }
 

@@ -21,6 +21,10 @@ namespace YMM {
         return m_items;
     }
 
+    int* CMenu::getPosition() {
+        return position;
+    }
+
     size_t CMenu::getCount() const {
         return m_count;
     }
