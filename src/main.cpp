@@ -1,25 +1,24 @@
 #include <cstdint>
+#include <ctime>
 #include <iostream>
 #include <cmath>
+#include <iterator>
+#include <new>
+#include <stdexcept>
+#include <execution>
+#include <string>
 #include "CMenu/CMenu.h"
 #include "CMenu/CMenuItem.h"
 #include "Models/Product.h"
 #include "Models/User.h"
 #include "Models/Employer/Employer.h"
 #include "Models/Provider/Provider.h"
-
-const int MAX_ITEMS_COUNT = 50;
-
-int providers_count = 0;
-int employers_count = 0;
-
-#pragma region функции-заглушки
+#include "Containers/MyVector.h"
 
 #pragma region example-funcions
 
 int f1() {
     std::cout << "Sqrt(25) = " << sqrt(25) << '\n';
-
     return 1;
 }
 
@@ -36,241 +35,179 @@ int f2() {
 
 #pragma endregion example-funcions
 
-#pragma region Employers
+#pragma region User
 
-int addEmployers() {
+int addUser() {
     return 1;
 };
 
-int deleteEmployers() {
+int deleteUser() {
     return 2;
 };
 
-int sortEmployers() {
+int sortUser() {
     return 3;
 };
 
-int showEmployers() {
+int showUser() {
     return 4;
 };
 
-void addEmployers(YMM::Employer *employers) {
+template<typename T>
+void addUser(T &v) {
     using namespace YMM;
     int count{};
     std::cout << "Введите количество элементов: ";
-    std::cin >> count;
-    for (int i = employers_count; i < count + employers_count; i++) {
-        std::cout << "=========" << "\n";
-        std::cin >> employers[i];
+    try {
+        std::string tmp_str{};
+        std::cin >> tmp_str;
+        count = std::stoi(tmp_str);
+        if (count < 1) throw ("invalid value");
+
+    } catch(const char* exception) {
+        std::cout << "error: " << exception << std::endl;
+    } catch(std::invalid_argument exception) {
+        std::cout << "error: only numbers are allowed" << std::endl;
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(std::out_of_range exception) {
+        std::cout << "error: too big number";
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(...) {
+        std::cout << "error:: unknown error" << std::endl;
     }
-    employers_count += count;
+
+
+    for (int i = 0; i < count; i++) {
+        std::cout << "=========" << "\n";
+        try {
+            v.addItem();
+        } catch(std::bad_alloc) {
+            std::cout << "error: can not allocate enough memory" << std::endl;
+        }
+        std::cin >> v[v.size() - 1];
+    }
 }
 
-void deleteEmployers(YMM::Employer *employers) {
+template<typename T>
+void deleteUser(T &v) {
     using namespace YMM;
     int index{};
-    std::cout << "Всего элементов: " << employers_count << "\n";
+    std::cout << "Всего элементов: " << v.size() << "\n";
     std::cout << "Удалить элемент номер: ";
-    std::cin >> index;
-    if (index > employers_count || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else {
-        if (index != MAX_ITEMS_COUNT){
-            for (int i = index-1; i < employers_count; i++) {
-                employers[i] = employers[i+1];
-            }
-        }
-        employers_count--;
+    try {
+        std::string tmp_str{};
+        std::cin >> tmp_str;
+        index = std::stoi(tmp_str);
+        if (index > v.size() || index < 1) throw ("invalid value");
+
+    } catch(const char* exception) {
+        std::cout << "error: " << exception << std::endl;
+    } catch(std::invalid_argument exception) {
+        std::cout << "error: only numbers are allowed" << std::endl;
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(std::out_of_range exception) {
+        std::cout << "error: too big number";
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(...) {
+        std::cout << "error:: unknown error" << std::endl;
     }
+
+    v.removeItem(index - 1);
 }
 
-void sortEmployers(YMM::Employer *employers) {
+template<typename T>
+void sortUser(T &v) {
     using namespace YMM;
     std::cout << "Сортировка ..." << "\n";
-    for (int i = 0; i < employers_count; i++) {
-        int index = i;
-        for (int j = i; j < employers_count; j++) {
-            if (employers[i] > employers[j]) {
-                if (index == i) {
-                    index = j;
-                } else if (j > index) {
-                    index = j;
-                }
-            }
-        }
-        Employer tmp = employers[i];
-        employers[i] = employers[index];
-        employers[index] = tmp;
-    }
+    v.sort();
 }
 
-void showEmployers(YMM::Employer *employers) {
+template<typename T>
+void showUser(T &v) {
     using namespace YMM;
-    std::cout << "Всего элементов: " << employers_count << "\n";
+    std::cout << "Всего элементов: " << v.size() << "\n";
     int index{};
     std::cout << "Показать элемент номер: ";
-    std::cin >> index;
-    if (index > employers_count || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else {
-        std::cout << employers[index-1];
+    try {
+        std::string tmp_str{};
+        std::cin >> tmp_str;
+        index = std::stoi(tmp_str);
+        if (index > v.size() || index < 0) throw ("invalid value");
+
+    } catch(const char* exception) {
+        std::cout << "error: " << exception << std::endl;
+    } catch(std::invalid_argument exception) {
+        std::cout << "error: only numbers are allowed" << std::endl;
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(std::out_of_range exception) {
+        std::cout << "error: too big number";
+        std::cerr << "error: " << exception.what() << std::endl;
+    } catch(...) {
+        std::cout << "error:: unknown error" << std::endl;
     }
-}
 
-#pragma endregion Employers
-
-#pragma region Providers
-
-int addProviders() {
-    return 1;
-};
-
-int deleteProviders() {
-    return 2;
-};
-
-int sortProviders() {
-    return 3;
-};
-
-int showProviders() {
-    return 4;
-};
-
-void addProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    int count{};
-    std::cout << "Введите количество элементов: ";
-    std::cin >> count;
-    for (int i = providers_count; i < count + providers_count; i++) {
-        std::cout << "=========" << "\n";
-        std::cin >> providers[i];
-    }
-    providers_count += count;
-}
-
-void deleteProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    int index{};
-    std::cout << "Всего элементов: " << providers_count << "\n";
-    std::cout << "Удалить элемент номер: ";
-    std::cin >> index;
-    std::cout << "=========" << "\n";
-    if (index > providers_count || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
-    } else {
-        if (index != MAX_ITEMS_COUNT){
-            for (int i = index-1; i < providers_count; i++) {
-                providers[i] = providers[i+1];
-            }
+    if (index == 0) {
+        for (auto item: v) {
+            std::cout << "=========" << std::endl;
+            std::cout << item << std::endl;
         }
-        providers_count--;
-    }
-}
-
-void sortProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    std::cout << "Сортировка ..." << "\n";
-    for (int i = 0; i < providers_count; i++) {
-        int index = i;
-        for (int j = i; j < providers_count; j++) {
-            if (providers[i] > providers[j]) {
-                if (index == i) {
-                    index = j;
-                } else if (j > index) {
-                    index = j;
-                }
-            }
-        }
-        Provider tmp = providers[i];
-        providers[i] = providers[index];
-        providers[index] = tmp;
-    }
-}
-
-void showProviders(YMM::Provider *providers) {
-    using namespace YMM;
-    std::cout << "Всего элементов: " << providers_count << "\n";
-    int index{};
-    std::cout << "Показать элемент номер: ";
-    std::cin >> index;
-    std::cout << "=========" << "\n";
-    if (index > providers_count || index < 1) {
-        std::cout << "Не существует элемента с номером: " << index << "\n";
     } else {
-        std::cout << providers[index-1];
+        std::cout << v[index - 1];
     }
 }
 
-#pragma endregion Providers
-
-#pragma endregion функции-заглушки
+#pragma endregion User
 
 int main() {
     using namespace YMM;
 
-    const int items_number = 3;
-
     // data
-    Provider *providers = new Provider[MAX_ITEMS_COUNT];
-    Employer *employers = new Employer[MAX_ITEMS_COUNT];
+    MyVector<Provider> providers;
+    MyVector<Employer> employers;
+    // Provider 
 
-    providers[0] = new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
-    providers[1] = new Provider("Abcd", "Surname", "MyLogin", "123", new Product("apple", "fruit", 10.2, 1500));
-    providers[2] = new Provider("Sticker", "Wander", "helper", "968", new Product("Magic wand", "wand", 7.0, 6500));
-    employers[0] = new Employer("Stive", "Jobs", "alive", "09876", "Boss");
-    employers[1] = new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
-    employers[2] = new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
-    providers_count = 3;
-    employers_count = 3;
+    providers += new Provider("Harry", "Potter", "Wizard", "617", new Product("History books", "book", 49.9, 350));
+    providers += new Provider("Abcd", "Surname", "MyLogin", "123", new Product("apple", "fruit", 10.2, 1500));
+    providers += new Provider("Sticker", "Wander", "helper", "968", new Product("Magic wand", "wand", 7.0, 6500));
+
+    employers += new Employer("Stive", "Jobs", "alive", "09876", "Boss");
+    employers += new Employer("Albus", "Dumbledore", "MainWizard", "5353535", "Director");
+    employers += new Employer("Mikhail", "Empty", "qwerty", "okmmjj0987987", "Developer");
+
+    const int items_count = 3;
 
     // menu items
-    CMenuItem subItems1[2] {
+    CMenuItem exampleItems[2] {
         CMenuItem("squrt(25)", f1),
         CMenuItem("triangle", f2)
     };
 
-    CMenuItem employerItems[4] {
-        CMenuItem("Добавить", addEmployers),
-        CMenuItem("Удалить", deleteEmployers),
-        CMenuItem("Сортировать", sortEmployers),
-        CMenuItem("Вывести в консоль", showEmployers)
+    CMenuItem userItems[4] {
+        CMenuItem("Добавить", addUser),
+        CMenuItem("Удалить", deleteUser),
+        CMenuItem("Сортировать", sortUser),
+        CMenuItem("Вывести в консоль", showUser)
     };
 
-    CMenuItem providerItems[4] {
-        CMenuItem("Добавить", addProviders),
-        CMenuItem("Удалить", deleteProviders),
-        CMenuItem("Сортировать", sortProviders),
-        CMenuItem("Вывести в консоль", showProviders)
-    };
-
-    CMenuItem producutItems[4] {
-        CMenuItem("Добавить", addProviders),
-        CMenuItem("Удалить", deleteProviders),
-        CMenuItem("Сортировать", sortProviders),
-        CMenuItem("Вывести в консоль", showProviders)
-    };
-
-    CMenuItem items[items_number] {
+    CMenuItem items[items_count] {
         CMenuItem("Example functions"),
         CMenuItem("Employer"),
         CMenuItem("Provider")
     };
 
     CMenu subMenuArr[3] {
-        CMenu("My sub menu 1", subItems1, 2),
-        CMenu("Employers", employerItems, 4),
-        CMenu("Providers", providerItems, 4)
+        CMenu("My sub menu 1", exampleItems, 2),
+        CMenu("Employers", userItems, 4),
+        CMenu("Providers", userItems, 4)
     };
 
-    CMenu menu("My console menu", items, items_number);
+    CMenu menu("My console menu", items, items_count);
  
-    int *position = nullptr;
     while (true) {
-        position = menu.runCommand(subMenuArr);
-        switch (position[0]) {
+        menu.runCommand(subMenuArr);
+        switch (menu.getPosition()[0]) {
         case 1:
-            switch (position[1]) {
+            switch (menu.getPosition()[1]) {
                 case 1:
                     f1();
                     break;
@@ -278,46 +215,87 @@ int main() {
                     f2();
                     break;
             }
-              break;
+            break;
         case 2:
-            switch (position[1]) {
+            switch (menu.getPosition()[1]) {
                 case 1:
-                    addEmployers(employers);
+                    try {
+                        addUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 2:
-                    deleteEmployers(employers);
+                    try {
+                        deleteUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 3:
-                    sortEmployers(employers);
+                    try {
+                        sortUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 4:
-                    showEmployers(employers);
+                    try {
+                        showUser<MyVector<Employer>>(employers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 default:
                     break;
             }
           break;
         case 3:
-            switch (position[1]) {
+            switch (menu.getPosition()[1]) {
                 case 1:
-                    addProviders(providers);
+                    try {
+                        addUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 2:
-                    deleteProviders(providers);
+                    try {
+                        deleteUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 3:
-                    sortProviders(providers);
+                    try {
+                        sortUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 case 4:
-                    showProviders(providers);
+                    try {
+                        showUser<MyVector<Provider>>(providers);
+                    } catch(std::invalid_argument exception) {
+                        std::cerr << "error: std::invalid_argument" << std::endl;
+                        std::cerr << exception.what() << std::endl;
+                    }
                     break;
                 default:
                     break;
             }
             break;
-        case -1:
-        default:
+        case 0:
             return 0;
+            break;
+        default:
             break;
         }
  

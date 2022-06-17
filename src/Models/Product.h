@@ -5,6 +5,10 @@
 namespace YMM {
     class Product {
         public:
+            Product();
+            Product(std::string, std::string, float, int);
+            ~Product();
+
             std::string getTitle() const;
             float getPrice() const;
             int getAmount() const;
@@ -17,9 +21,6 @@ namespace YMM {
 
             void printData() const;
 
-            Product();
-            Product(std::string, std::string, float, int);
-
             friend std::ostream& operator<<(std::ostream&, Product&);
             friend std::istream& operator>>(std::istream&, Product&);
             friend bool operator>(const Product&, const Product&);
@@ -31,9 +32,9 @@ namespace YMM {
             Product* operator=(const Product *obj);
 
         protected:
-            std::string m_title;
-            std::string m_productType;
-            float m_price;
-            int m_amount;
+            std::string m_title{};
+            std::string m_productType{};
+            float m_price{};
+            int m_amount{};
     };
 }

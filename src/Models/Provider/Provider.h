@@ -9,6 +9,7 @@ namespace YMM {
         public:
             Provider();
             Provider(std::string _name, std::string _surname, std::string _login, std::string _password, Product *);
+            ~Provider();
 
             virtual void printData() const;
 
@@ -22,6 +23,8 @@ namespace YMM {
             friend bool operator!=(const Provider &item_1, const Provider &item_2);
             Provider& operator=(const Provider &obj);
             Provider* operator=(const Provider *obj);
+
+            Provider* new_instance();
 
         private:
             Product *m_product = nullptr;

@@ -12,13 +12,15 @@ class CMenu {
         bool isRun() const;
         char *getTitle();
         size_t getCount() const;
+        int* getPosition();
         CMenuItem *getItems();
         void print();
         int runCommand();
-        int runSubMenuCommand();
-        int *runCommand(CMenu*);
+        void runSubMenuCommand();
+        void runCommand(CMenu*);
 
     private:
+        inline static int position[2] {0, 0};
         int m_select{-1};
         size_t m_count{};
         bool m_running{};

@@ -1,6 +1,16 @@
 #include "Employer.h"
 
 namespace YMM {
+    Employer::Employer() {}
+
+    Employer::Employer(std::string _name, std::string _surname, std::string _login, std::string _password, std::string _position) {
+        m_name = _name;
+        m_surname = _surname;
+        m_login = _login;
+        m_password = _password;
+        m_position = _position;
+    }
+
     std::string Employer::getPosition() const {
         return m_position;
     }
@@ -15,16 +25,6 @@ namespace YMM {
         std::cout << "Login " << Employer::getLogin() << std::endl;
         std::cout << "Password " << Employer::getPassword() << std::endl;
         std::cout << "Position " << Employer::getPosition() << std::endl;
-    }
-
-    Employer::Employer() {}
-
-    Employer::Employer(std::string _name, std::string _surname, std::string _login, std::string _password, std::string _position) {
-        m_name = _name;
-        m_surname = _surname;
-        m_login = _login;
-        m_password = _password;
-        m_position = _position;
     }
 
     bool operator<(const Employer &item_1, const Employer &item_2) {
@@ -84,5 +84,9 @@ namespace YMM {
         m_password = obj->m_password;
         m_position = obj->m_position;
         return this;
+    }
+
+    Employer* Employer::new_instance() {
+        return new Employer();
     }
 }
