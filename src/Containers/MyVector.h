@@ -229,5 +229,3 @@ namespace YMM {
            }
     };
 }
-
-// template<typename T>

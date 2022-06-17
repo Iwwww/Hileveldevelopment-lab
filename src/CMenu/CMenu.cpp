@@ -80,7 +80,7 @@ namespace YMM {
         print();
 
         do {
-            std::cout << "\n Select l->> ";
+            std::cout << "\n Select ->> ";
             std::cin >> m_select;
         } while (m_select == -1 || m_select > m_count);
 
